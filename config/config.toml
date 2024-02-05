@@ -1,0 +1,127 @@
+# Input 2D gebouw polygonen (bv BAG)
+#   path:                           pad (in docker image) naar het 2D vector bestand
+#   id_attribute:                   naam van attribuut met gebouw identifier
+#   low_lod_attribute:              naam van boolean attribuut waarmee aagegeven wordt of een gebouw alleen 
+#                                   in LoD1 blokvorm gereconstrueerd dient te worden. Als de waarde 'true' is 
+#                                   voor een gebouw dan wordt voor dit gebouw alleen een simpele LoD1 blokvorm gereconstrueerd.
+#                                   Dit is aan te raden voor zeer grote gebouwen zoals Kassen en warenhuizen, die anders het 
+#                                   reconstructie proces erg vertragen
+#   year_of_construction_attribute: naam van attribuut waarin het bouwjaar van het gebouw staat als integer waarde.
+[input.footprint]
+path = '/data/poly/reconstruction_input_route2.gpkg'
+id_attribute = "identificatie"
+low_lod_attribute = 'kas_warenhuis'
+year_of_construction_attribute = 'oorspronkelijkbouwjaar'
+
+# Input puntenwolken
+# Voor iedere input puntenwolk (bv AHN3, AHN4, DIM) zijn er de volgende argumenten:
+#   name:                   Naam van de puntenwolk. Dit dient exact 'DIM' te zijn voor een densematching puntenwolk, anders wordt aangenomen dat het een lidar puntenwolk is.
+#   date:                   Inwinjaar van de puntenwolk. Dit hoeft alleen gespecificeerd te worden als de LAS/LAZ bestanden 
+#                           zelf geen GPS timestamps hebben of het 'File Creation Year' niet klopt met het acquisitie jaar.
+#   quality:                Integer waarde waarmee een voorkeursvolgorde wordt aangegeven voor de input puntenwolken. 
+#                           Een lagere waarde betekent een hogere voorkeur. Puntenwolken met een hogere voorkeur hebben 
+#                           een grotere kans om geselecteerd te worden
+#   force_low_lod:          zet op 'true' als voor de gebouwen waar deze puntenwolk voor wordt geselecteerd alleen een simpele 
+#                           LoD1 blokvorm gereconstrueerd dient te worden.
+#   select_only_for_date:   zet op 'true' als deze puntenwokl alleen op basis van de acquisitie datum geselecteerd moet worden (aanbevolen voor DIM).
+#   path:                   Lijst met LAS/LAZ bestanden
+#[[input.pointclouds]]
+#name = "DIM"
+#date = 2020
+#quality = 2
+#force_low_lod = false
+#select_only_for_date = true
+#path = '/data/laz/2020_dim/80500_455000.laz /data/laz/2020_dim/80500_455500.laz /data/laz/2020_dim/81000_455000.laz /data/laz/2020_dim/81000_455500.laz'
+
+[[input.pointclouds]]
+name = "AHN3"
+quality = 1
+#path = '/data/laz/ahn3/LHD_FXX_0380_6264_PTS_C_LAMB93_IGN69.copc.laz'
+#path = '/data/laz/ahn3/LHD_FXX_0387_6241_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0387_6240_PTS_C_LAMB93_IGN69.copc.laz'
+path = '/data/laz/ahn3/LHD_FXX_0380_6264_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0380_6265_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0381_6265_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0381_6266_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0382_6266_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0382_6267_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0382_6268_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0382_6269_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0382_6271_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0382_6272_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0382_6273_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0383_6269_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0383_6270_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0383_6271_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0383_6272_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0383_6273_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0383_6274_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0383_6276_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0383_6277_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0383_6278_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0384_6274_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0384_6275_PTS_C_LAMB93_IGN69.copc.laz /data/laz/ahn3/LHD_FXX_0384_6276_PTS_C_LAMB93_IGN69.copc.laz '
+
+
+#[[input.pointclouds]]
+#name = "AHN4"
+#quality = 0
+#path = '/data/laz/ahn4/t_995178.laz /data/laz/ahn4/t_995179.laz /data/laz/ahn4/t_995180.laz /data/laz/ahn4/t_995181.laz /data/laz/ahn4/t_992518.laz /data/laz/ahn4/t_992519.laz /data/laz/ahn4/t_992520.laz /data/laz/ahn4/t_992521.laz /data/laz/ahn4/t_993848.laz /data/laz/ahn4/t_993849.laz /data/laz/ahn4/t_993850.laz /data/laz/ahn4/t_993851.laz /data/laz/ahn4/t_991188.laz /data/laz/ahn4/t_991189.laz /data/laz/ahn4/t_991190.laz /data/laz/ahn4/t_991191.laz'
+
+# Algemene gebouw reconstructie parameters
+[output.reconstruction_parameters]
+GF_PROCESS_CRS="EPSG:2154"
+OUTPUT_CRS="EPSG:2154"
+CITYJSON_TRANSLATE_X=380950.29999999999
+CITYJSON_TRANSLATE_Y=6263549.0
+CITYJSON_TRANSLATE_Z=0.0
+CITYJSON_SCALE_X=0.001
+CITYJSON_SCALE_Y=0.001
+CITYJSON_SCALE_Z=0.001
+
+line_detect__epsilon=0.6
+lod13__step_height=3.0
+optimisation_data_term=20.0
+plane_detect__k=50
+plane_detect__epsilon=0.2
+plane_detect__min_points=10
+plane_detect__normal_angle=0.75
+thres_alpha=0.25
+thres_reg_line_dist=0.6
+thres_reg_line_ext=3.0
+clip_ground=true
+
+#line_detect__epsilon=1.0
+#lod13__step_height=3.0
+#optimisation_data_term=8.0
+#plane_detect__k=15
+#plane_detect__epsilon=0.3
+#plane_detect__min_points=15
+#plane_detect__normal_angle=0.75
+#thres_alpha=0.25
+#thres_reg_line_dist=0.8
+#thres_reg_line_ext=3.0
+#clip_ground=true
+
+# RANSAC plane detection (not recommended, disabled by default)
+plane_detect__use_ransac=false
+plane_detect__ransac_cluster_epsilon = 0.3
+plane_detect__ransac_probability = 0.05
+
+# plane regularisation (disabled by default)
+# for more explanation of parameters see: https://doc.cgal.org/latest/Shape_regularization/group__PkgShapeRegularizationRefPlanes.html#ga9ace5aafd056ce9ccb348c96e38d361a
+plane_reg__angle=10.0
+plane_reg__offset=0.4
+plane_reg__parallelism=false
+plane_reg__orthogonality=false
+plane_reg__coplanarity=true
+plane_reg__axis_symmetry=false
+
+# Specifieke parameters voor DIM gebouw reconstructie (kopieer parameters uit de algemene sectie hiernaartoe)
+[output.reconstruction_parameters_dim]
+optimisation_data_term=6.0
+GF_PROCESS_CRS="EPSG:2154"
+# Specifieke parameters voor LiDAR gebouw reconstructie (kopieer paremeters uit de algemene sectie hiernaartoe)
+[output.reconstruction_parameters_lidar]
+GF_PROCESS_CRS="EPSG:2154"
+
+# Bestandsbenaming voor tijdelijke bestanden en output bestanden
+[output]
+GF_PROCESS_CRS="EPSG:2154"
+path = '/tmp'
+
+# {bid} will be replaced by building identifier
+# {pc_name} will be replaced by input pointcloud name
+# {path} will be replaced by path
+
+## temporary files for all buildings
+jsonl_list_file = '{path}/features.txt'
+
+## temporary files per building
+building_toml_file = '{path}/features/{bid}/config{pc_name}.toml'
+building_las_file = '{path}/features/{bid}/crop/{bid}_{pc_name}.las'
+building_raster_file = '{path}/features/{bid}/crop/{bid}_{pc_name}.tif'
+building_gpkg_file = '{path}/features/{bid}/crop/{bid}.gpkg'
+
+# output path of building features (CityJSON Features)
+building_jsonl_file = '/data/output/features/{bid}.city.jsonl'
+metadata_json_file = '/data/output/metadata.jsonl'
+index_file = '/data/output/indexx.gpkg'
